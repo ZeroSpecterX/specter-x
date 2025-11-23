@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>⚠ بوابة الظلام - فحص الجهاز ⚠</title>
+<style>
+    body {
+        background: #000;
+        color: #0f0;
+        font-family: monospace;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+
+    .scan-container {
+        padding: 30px;
+        text-align: center;
+        animation: flicker 1.5s infinite;
+    }
+
+    h1 {
+        font-size: 50px;
+        color: red;
+        text-shadow: 0 0 20px red;
+        animation: pulse 2s infinite;
+    }
+
+    .scan-box {
+        border: 3px solid #0f0;
+        padding: 25px;
+        margin: 0px;
+        border-radius: 15px;
+        background: rgba(0, 20, 0, 0.4);
+        box-shadow: 0 0 px #0f0 inset;
+        font-size: 22px;
+        line-height: 40px;
+        text-align: left;
+    }
+
+    @keyframes flicker {
+        0% { opacity: 1; }
+        50% { opacity: 0.85; }
+        100% { opacity: 1; }
+    }
+
+    @keyframes pulse {
+        0% { text-shadow: 0 0 20px red; }
+        50% { text-shadow: 0 0 50px red; }
+        100% { text-shadow: 0 0 20px red; }
+    }
+
+    .warning {
+        color: red;
+        font-size: 30px;
+        margin-top: 20px;
+        text-shadow: 0 0 15px red;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="scan-container">
+    <h1>⚠ فحص جهازك بدأ الآن ⚠</h1>
+    <p class="warning">لا تتحرك… لا تغلق الصفحة…</p>
+
+    <div class="scan-box">
+        <p><strong>المتصفح:</strong> <span id="browser">جارٍ التحليل...</span></p>
+        <p><strong>النظام:</strong> <span id="platform">جارٍ التحليل...</span></p>
+        <p><strong>المعالج:</strong> <span id="cpu">جارٍ التحليل...</span></p>
+        <p><strong>الذاكرة:</strong> <span id="ram">جارٍ التحليل...</span></p>
+        <p><strong>الشحن:</strong> <span id="battery">جارٍ التحليل...</span></p>
+        <p><strong>الدقة:</strong> <span id="screenres">جارٍ التحليل...</span></p>
+        <p><strong>الحركة (Gyroscope):</strong> <span id="gyro">جارٍ التحليل...</span></p>
+        <p><strong>اتصال الإنترنت:</strong> <span id="net">جارٍ التحليل...</span></p>
+    </div>
+
+    <p class="warning">(￣_,￣ )...تم كشف جهازك بالكامل ...سيتم اختراق جهازك قريبا</p>
+
+</div>
+
+<script>
+// Browser
+document.getElementById("browser").innerText = navigator.userAgent;
+
+// Platform
+document.getElementById("platform").innerText = navigator.platform;
+
+// CPU
+document.getElementById("cpu").innerText = navigator.hardwareConcurrency + " نواة";
+
+// RAM
+document.getElementById("ram").innerText = navigator.deviceMemory ? navigator.deviceMemory + " GB" : "غير معروف";
+
+// Screen resolution
+document.getElementById("screenres").innerText = screen.width + "x" + screen.height;
+
+// Internet check
+document.getElementById("net").innerText = navigator.onLine ? "متصل" : "غير متصل";
+
+// Battery
+if (navigator.getBattery) {
+    navigator.getBattery().then(function(battery) {
+        function updateBattery() {
+            document.getElementById("battery").innerText = Math.round(battery.level * 100) + "%";
+        }
+        updateBattery();
+        battery.addEventListener("levelchange", updateBattery);
+    });
+}
+
+// Gyroscope
+if (window.DeviceOrientationEvent) {
+    window.addEventListener("deviceorientation", function(event) {
+        document.getElementById("gyro").innerText =
+            "X: " + Math.round(event.alpha) +
+            ", Y: " + Math.round(event.beta) +
+            ", Z: " + Math.round(event.gamma);
+    });
+} else {
+    document.getElementById("gyro").innerText = "غير مدعوم";
+}
+</script>
+
+<h2 style="color:#0f0; text-align:center; margin: top 40px;px;">
+تم التصميم والتطوير بواسطة زيرو سبيكتر إكس
+</h2>
+
+</body>
+</html>
